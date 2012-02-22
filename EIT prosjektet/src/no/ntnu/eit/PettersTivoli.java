@@ -1,7 +1,9 @@
 package no.ntnu.eit;
 
 import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.common.Mat22;
 import org.jbox2d.common.MathUtils;
+import org.jbox2d.common.Transform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
@@ -18,6 +20,7 @@ public class PettersTivoli extends TestbedTest{
 	private RevoluteJoint m_joint1;
 	private PrismaticJoint m_joint2;
 	private Body kk;
+	Body m_body;
 	
 	@Override
 	public String getTestName() {
@@ -45,7 +48,7 @@ public class PettersTivoli extends TestbedTest{
 
 			BodyDef bd = new BodyDef();
 			bd.position.set(-4.0f, 22.0f);
-			bd.angle = -0.25f;
+			bd.angle = -0.3f;
 
 			Body ground = getWorld().createBody(bd);
 			ground.createFixture(shape, 0.0f);
@@ -150,7 +153,7 @@ public class PettersTivoli extends TestbedTest{
 				RevoluteJointDef rjd = new RevoluteJointDef();
 				rjd.initialize(prevBody, body, new Vec2(10.0f, 6.0f));
 				rjd.motorSpeed = 0.70f * MathUtils.PI;
-				rjd.maxMotorTorque = 50000.0f;
+				rjd.maxMotorTorque = 20000.0f;
 				rjd.enableMotor = true;
 				m_joint1 = (RevoluteJoint)getWorld().createJoint(rjd);
 
@@ -214,6 +217,51 @@ public class PettersTivoli extends TestbedTest{
 				body.createFixture(shape, 2.0f);
 			}
 			*/
+		}
+		
+		{
+			Transform xf1 = new Transform();
+			xf1.R.set(0.3524f * MathUtils.PI);
+			Mat22.mulToOut(xf1.R, new Vec2(1.0f, 0.0f), xf1.position);
+			
+			Vec2 vertices[] = new Vec2[3];
+			vertices[0] = Transform.mul(xf1, new Vec2(-1.0f, 0.0f));
+			vertices[1] = Transform.mul(xf1, new Vec2(1.0f, 0.0f));
+			vertices[2] = Transform.mul(xf1, new Vec2(0.0f, 0.5f));
+			
+			PolygonShape poly1 = new PolygonShape();
+			poly1.set(vertices, 3);
+			
+			FixtureDef sd1 = new FixtureDef();
+			sd1.shape = poly1;
+			sd1.density = 4.0f;
+			
+			Transform xf2 = new Transform();
+			xf2.R.set(-0.3524f * MathUtils.PI);
+			Mat22.mulToOut(xf2.R, new Vec2(-1.0f, 0.0f), xf2.position);
+			
+			vertices[0] = Transform.mul(xf2, new Vec2(-10.0f, 0.0f));
+			vertices[1] = Transform.mul(xf2, new Vec2(1.0f, 0.0f));
+			vertices[2] = Transform.mul(xf2, new Vec2(0.0f, 0.5f));
+			
+			PolygonShape poly2 = new PolygonShape();
+			poly2.set(vertices, 3);
+			
+			FixtureDef sd2 = new FixtureDef();
+			sd2.shape = poly2;
+			sd2.density = 2.0f;
+			
+			BodyDef bd = new BodyDef();
+			bd.type = BodyType.DYNAMIC;
+			bd.angularDamping = 5.0f;
+			bd.linearDamping = 0.1f;
+			
+			bd.position.set(0.0f, 2.0f);
+			bd.angle = MathUtils.PI;
+			bd.allowSleep = false;
+			m_body = getWorld().createBody(bd);
+			m_body.createFixture(sd1);
+			m_body.createFixture(sd2);
 		}
 		
 	}
