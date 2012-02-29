@@ -1,4 +1,4 @@
-package no.ntnu.eit;
+package no.ntnu.eit.controllers;
 
 import no.ntnu.eit.mainTypes.CarInstructions;
 import no.ntnu.eit.mainTypes.CarStateData;

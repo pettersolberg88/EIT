@@ -3,6 +3,8 @@ package no.ntnu.eit;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import no.ntnu.eit.cars.OpelCorsa;
+import no.ntnu.eit.controllers.DummyController;
 import no.ntnu.eit.mainTypes.Car;
 
 import org.jbox2d.collision.shapes.PolygonShape;

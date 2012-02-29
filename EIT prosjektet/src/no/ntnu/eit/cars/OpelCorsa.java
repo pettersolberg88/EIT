@@ -1,4 +1,4 @@
-package no.ntnu.eit;
+package no.ntnu.eit.cars;
 
 import org.jbox2d.testbed.framework.TestbedTest;
 

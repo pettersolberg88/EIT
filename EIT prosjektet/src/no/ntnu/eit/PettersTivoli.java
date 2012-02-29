@@ -1,5 +1,8 @@
 package no.ntnu.eit;
 
+import no.ntnu.eit.cars.OpelCorsa;
+import no.ntnu.eit.controllers.DummyController;
+
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Mat22;
 import org.jbox2d.common.MathUtils;
@@ -35,7 +38,7 @@ public class PettersTivoli extends TestbedTest{
 	  }
 
 	  for (int i = 0; i < 10; i++) {
-		new SportsCar(4.0f * i - 20, 20.0f , this);
+		new OpelCorsa(4.0f * i - 20, 20.0f ,new DummyController(), this);
 	}
 		{
 			BodyDef bd = new BodyDef();
