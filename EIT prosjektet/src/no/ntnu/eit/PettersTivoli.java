@@ -4,25 +4,13 @@ import no.ntnu.eit.cars.OpelCorsa;
 import no.ntnu.eit.controllers.DummyController;
 
 import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.common.Mat22;
-import org.jbox2d.common.MathUtils;
-import org.jbox2d.common.Transform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.dynamics.joints.PrismaticJoint;
-import org.jbox2d.dynamics.joints.PrismaticJointDef;
-import org.jbox2d.dynamics.joints.RevoluteJoint;
-import org.jbox2d.dynamics.joints.RevoluteJointDef;
 import org.jbox2d.testbed.framework.TestbedTest;
 
 public class PettersTivoli extends TestbedTest{
 
-	private RevoluteJoint m_joint1;
-	private PrismaticJoint m_joint2;
-	private Body kk;
 	Body m_body;
 	
 	@Override

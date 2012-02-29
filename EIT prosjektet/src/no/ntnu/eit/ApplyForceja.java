@@ -30,21 +30,16 @@ import org.jbox2d.collision.DistanceInput;
 import org.jbox2d.collision.DistanceOutput;
 import org.jbox2d.collision.Distance.SimplexCache;
 import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Mat22;
 import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Transform;
-import org.jbox2d.common.Settings;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.dynamics.joints.FrictionJointDef;
 import org.jbox2d.testbed.framework.TestbedSettings;
 import org.jbox2d.testbed.framework.TestbedTest;
-
-import org.jbox2d.collision.Distance.SimplexCache;
 /**
  * @author Daniel Murphy
  */
@@ -132,7 +127,7 @@ public class ApplyForceja extends TestbedTest {
 			xf1.R.set(0.3524f * MathUtils.PI);
 			Mat22.mulToOut(xf1.R, new Vec2(-1.0f, 0.0f), xf1.position);
 			
-			Vec2 vertices[] = new Vec2[3];
+//			Vec2 vertices[] = new Vec2[3];
 			//vertices[0] = Transform.mul(xf1, new Vec2(-1.0f, 0.0f));
 			//vertices[1] = Transform.mul(xf1, new Vec2(1.0f, 0.0f));
 			//vertices[2] = Transform.mul(xf1, new Vec2(0.0f, 0.5f));
@@ -180,7 +175,7 @@ public class ApplyForceja extends TestbedTest {
 			xf1.R.set(0.3524f * MathUtils.PI);
 			Mat22.mulToOut(xf1.R, new Vec2(-1.0f, 0.0f), xf1.position);
 			
-			Vec2 vertices[] = new Vec2[3];
+//			Vec2 vertices[] = new Vec2[3];
 			//vertices[0] = Transform.mul(xf1, new Vec2(-1.0f, 0.0f));
 			//vertices[1] = Transform.mul(xf1, new Vec2(1.0f, 0.0f));
 			//vertices[2] = Transform.mul(xf1, new Vec2(0.0f, 0.5f));
