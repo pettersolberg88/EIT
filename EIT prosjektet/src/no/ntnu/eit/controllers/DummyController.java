@@ -46,7 +46,6 @@ public class DummyController extends Controller{
 		else{
 			ci.setThrottle(0.0f);
 		}
-		System.out.println(csd.getSpeed());
 		return ci;
 	}
 

@@ -30,22 +30,24 @@ public class PettersRaceTrack extends TestbedTest{
 		
 		cars = new ArrayList<Car>();
 		
+		this.setCamera(new Vec2(0, 0), 3f);
+		
 		// ADD GROUND
 		{
 			BodyDef bd = new BodyDef();
 			Body ground = getWorld().createBody(bd);
 
 			PolygonShape shape = new PolygonShape();
-			shape.setAsEdge(new Vec2(-400.0f, 0.0f), new Vec2(400.0f, 0.0f));
+			shape.setAsEdge(new Vec2(-4000.0f, 0.0f), new Vec2(4000.0f, 0.0f));
 			ground.createFixture(shape, 0.0f);
 			
 			
 		}
 		
 		// ADD CARS
-		cars.add(new OpelCorsa(60.0f, 3.0f, new DummyController(), this));
+		cars.add(new OpelCorsa(80.0f, 3.0f, new DummyController(), this));
 		for (int i =1; i < 20; i++) {
-			cars.add(new OpelCorsa(25.0f - i * 10 + (int)( Math.random()* 5), 3, new DummyController(), this));
+			cars.add(new OpelCorsa(25.0f - i * 10 * i + (int)( Math.random()* 5), 3, new DummyController(), this));
 			if(i > 0){
 				cars.get(i).setCarInFront(cars.get(i-1));				
 			}
@@ -65,5 +67,6 @@ public class PettersRaceTrack extends TestbedTest{
 		
 		
 	}
+	
 
 }
