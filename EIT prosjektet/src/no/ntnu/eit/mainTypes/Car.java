@@ -1,6 +1,8 @@
 package no.ntnu.eit.mainTypes;
 
 
+import no.ntnu.eit.controllers.SineController;
+
 import org.jbox2d.collision.DistanceInput;
 import org.jbox2d.collision.DistanceOutput;
 import org.jbox2d.collision.Distance.SimplexCache;
@@ -15,6 +17,11 @@ import org.jbox2d.testbed.framework.TestbedTest;
 public abstract class Car {
 	
 	//// ASSUMING STATIC TICK TIME FOR HP
+	private static final float THROTTLE_COST = 1.0f;
+	private static final float BRAKE_COST = 1f;
+	private static final float TIME_COST = 1f;
+	private static final float CRASH_COST = 100000;
+	
 	
 	public Body body;
 	private CarStateData csd;
@@ -22,8 +29,12 @@ public abstract class Car {
 	private PolygonShape shape;
 	private Car carInFront;
 	
-	private Controller controller;
+	protected Controller controller;
 	private FixtureDef fixDef;
+	
+	private float cost;
+	private boolean wasCrashing = false;
+	
 	/**
 	 * Creates a new car
 	 * @param x Xpos
@@ -45,7 +56,7 @@ public abstract class Car {
 		fixDef.shape = shape;
 		fixDef.restitution = getRestitution();
 		fixDef.density = getMass() / getHeight() / getWidth();
-		System.out.println(fixDef.friction);
+//		System.out.println(fixDef.friction);
 		body.createFixture(fixDef);
 
 		csd = new CarStateData();
@@ -60,9 +71,30 @@ public abstract class Car {
 		csd.setDistanceToObjectInFront(distanceHorisontalBetween(carInFront));
 		
 		CarInstructions ci = controller.step(csd);
+		if(ci.error){
+//			System.err.println("ERROR");
+		}
+		
 		accelerate(ci.getThrottle());
 		brake(ci.getBrake());
 		
+		// CALCULATE COST
+		
+		cost += ci.getThrottle()* THROTTLE_COST;
+		cost += ci.getBrake()* BRAKE_COST;
+		cost += TIME_COST;
+		if(isCrashing()){
+			if (!wasCrashing) {
+				if(carInFront.controller instanceof SineController){
+					cost += CRASH_COST*100;
+				}
+				cost += CRASH_COST;
+				wasCrashing = true;
+			}
+		}
+		else{
+			wasCrashing = false;
+		}
 		
 	}
 	
@@ -71,6 +103,7 @@ public abstract class Car {
 		Vec2 p = body.getWorldPoint(body.getLocalCenter());
 		body.applyForce(f, p);
 	}
+	
 	
 	private void brake(float b){
 		float oldFriction = fixDef.friction;
@@ -145,6 +178,17 @@ public abstract class Car {
 	 * @return
 	 */
 	protected abstract float getMaximunBrakeForce();
+	
+	private boolean isCrashing(){
+		if(distanceHorisontalBetween(carInFront) < 0.01f && carInFront != null){
+			return true;
+		}
+		return false;
+	}
+	
+	public float getCost(){
+		return cost;
+	}
 	
 
 }

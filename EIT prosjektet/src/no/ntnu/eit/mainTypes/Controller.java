@@ -12,5 +12,13 @@ public abstract class Controller {
 	 * @param csd	The car state data
 	 * @return	The car instructions
 	 */
+	
+	protected float getPreferredDistance(CarStateData csd){
+		
+		return (float) (Math.pow(Math.abs(csd.getSpeed())/2,1) + 2);
+//		return 2;
+//		return 0;
+		
+	}
 	public abstract CarInstructions step(CarStateData csd);
 }
